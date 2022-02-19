@@ -1,0 +1,5 @@
+export default {
+  small: 5,
+  medium: 7,
+  large: 10,
+};

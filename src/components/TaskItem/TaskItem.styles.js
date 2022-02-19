@@ -1,12 +1,19 @@
 import {StyleSheet} from 'react-native';
+import colors from '../../styles/colors';
+import radius from '../../styles/radius';
+import spacing from '../../styles/spacing';
 
 export default StyleSheet.create({
   item_container: {
-    margin: 10,
-    height: 100,
+    margin: spacing.large,
+    backgroundColor: colors.itemBackground,
   },
-  item: {
+  itemDone: {
+    textDecorationLine: 'line-through',
+  },
+  text: {
     fontSize: 20,
     color: 'black',
   },
+  decoration: {},
 });

@@ -1,11 +1,15 @@
 import {StyleSheet} from 'react-native';
+import colors from './styles/colors';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.backgroundColor,
   },
-  container_flat: {
-    flex: 1,
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    textAlign: 'center',
   },
   input_area: {},
 });

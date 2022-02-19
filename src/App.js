@@ -1,33 +1,29 @@
 import React, {useState} from 'react';
-import {SafeAreaView, View, Alert, FlatList, Text} from 'react-native';
+import {SafeAreaView, Alert, FlatList, Text} from 'react-native';
 
-import Button from './components/Button';
-import Input from './components/Input';
+import TaskInput from './components/TaskInputArea';
 import TaskItem from './components/TaskItem';
 import styles from './App.styles';
 
 const App = () => {
-  const [taskList, setTaskList] = useState([]);
-  const [task, setTask] = useState();
+  const [data, setData] = useState([]);
 
-  const handleAddTask = () => {
-    if (task === '') {
-      Alert.alert('Lütfen Geçerli Bir Değer Giriniz !!');
-    } else if (taskList.some(todo => todo.text === task)) {
-      Alert.alert('Bu Görev Zaten Mevcut!');
+  const handleInput = (task, taskList) => {
+    if (!task || !taskList) {
+      return Alert.alert('Alan Boş Bırakılamaz!');
     } else {
       const item = {
-        id: Date.now(),
         text: task,
-        done: false,
+        data: taskList,
+        id: new Date(),
       };
-      setTaskList([...taskList, item]);
+      setData([item, ...data]);
     }
   };
 
   const handlePress = id => {
-    setTaskList(
-      taskList.map(item =>
+    setData(
+      data.map(item =>
         item.id === id ? {...item, done: !item.done} : {...item},
       ),
     );
@@ -43,12 +39,8 @@ const App = () => {
     ]);
   };
 
-  const handleEnterTask = text => {
-    setTask(text);
-  };
-
   const deleteItem = id => {
-    setTaskList(taskList.filter(item => item.id !== id));
+    setData(data.filter(item => item.id !== id));
   };
 
   const renderTaskItem = ({item}) => (
@@ -71,19 +63,12 @@ const App = () => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Todays Task List</Text>
       <FlatList
-        data={taskList}
+        data={data}
         renderItem={renderTaskItem}
         style={styles.mainContainer}
         keyExtractor={item => item.id.toString()}
       />
-      <View style={styles.input_area}>
-        <Input
-          value={task}
-          onChangeText={handleEnterTask}
-          placeholder="Enter Task"
-        />
-        <Button onPress={handleAddTask} label="Add Task" />
-      </View>
+      <TaskInput onInput={handleInput} />
     </SafeAreaView>
   );
 };
